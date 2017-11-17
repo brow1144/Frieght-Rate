@@ -176,7 +176,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
         calcHaulPrice()
     }
     
-    func myTollFieldDidChange(_ textField: UITextField) {
+    @objc func myTollFieldDidChange(_ textField: UITextField) {
         if let amountString = tollsPerMile.text?.currencyInputFormatting() {
             textField.text = amountString
             var realInt = removeSymbols(amountString)
@@ -231,7 +231,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
         calcHaulPrice()
     }
     
-    func myRateTextFieldDidChange(_ textField: UITextField) {
+    @objc func myRateTextFieldDidChange(_ textField: UITextField) {
         if let amountString = targetRatePerHour.text?.currencyInputFormatting() {
             textField.text = amountString
             
@@ -251,7 +251,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
         calcHaulPrice()
     }
     
-    func dismissKeyboard() {
+    @objc func dismissKeyboard() {
         view.endEditing(true)
     }
     
