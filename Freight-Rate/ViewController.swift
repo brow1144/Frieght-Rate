@@ -19,7 +19,6 @@ class ViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet var mileageSubjectToTolls: UITextField!
     @IBOutlet var tollsPerMile: UITextField!
     @IBOutlet var isBackhaul: UISwitch!
-    
     @IBOutlet var ratePerMinute: UILabel!
     @IBOutlet var loadingTimeResult: UILabel!
     @IBOutlet var totalMinutes: UILabel!
@@ -52,6 +51,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
         targetRatePerHour.addTarget(self, action: #selector(myRateTextFieldDidChange), for: .editingChanged)
         tollsPerMile.addTarget(self, action: #selector(myTollFieldDidChange), for: .editingChanged)
     }
+    
     @IBAction func refreshEverythinga(_ sender: UIButton) {
         tonsPerTruckLoad.text = ""
         targetRatePerHour.text = ""
@@ -81,7 +81,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
     
     private func removeSymbols(_ string: String) -> String {
         let removal: [Character] = ["$"," ",",",".","%"]
-        let unfilteredCharacters = string.characters
+        let unfilteredCharacters = string
         let filteredCharacters = unfilteredCharacters.filter { !removal.contains($0) }
         let filtered = String(filteredCharacters)
         return String(filtered)
@@ -98,8 +98,8 @@ class ViewController: UIViewController, UITextFieldDelegate {
             finalPerTon = String(Double(finalPerTon)!.rounded(toPlaces: 2) * 10)
             finalPerTon = String(finalPerTon).currencyInputFormatting()
             finalHaul = String(Double(finalHaul)!.rounded(toPlaces: 2) * 10 )
-            finalHaul = (String(finalHaul)?.currencyInputFormatting())!
-            
+            finalHaul = (finalHaul.currencyInputFormatting())
+    
             haulPricec.text = finalHaul
             pricePerTon.text = finalPerTon
             
@@ -131,7 +131,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
         }
         combinedTotalMinutes.text = String(Int(overallMintes))
         combinedTotalHours.text = String((Double(overallMintes) / 60).rounded(toPlaces: 2) )
-        calcHaulPrice()
+        //calcHaulPrice()
     }
     
     func renderLoadingTime() {
@@ -141,7 +141,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
             loadingTimeResult.text = "0"
         }
         calcOverallMinute()
-        calcHaulPrice()
+        //calcHaulPrice()
     }
     
     func renderTotalMinutesToHaul() {
@@ -163,7 +163,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
             totalMinutesFrom.text =  String(Int(Double(totalMinutes.text!)!.rounded(toPlaces: 0)))
         }
         calcOverallMinute()
-        calcHaulPrice()
+        //calcHaulPrice()
     }
     
     func renderUnLoadingTime() {
@@ -173,7 +173,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
             unloadingTimeResult.text = "0"
         }
         calcOverallMinute()
-        calcHaulPrice()
+        //calcHaulPrice()
     }
     
     @objc func myTollFieldDidChange(_ textField: UITextField) {
@@ -210,7 +210,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
             }
         }
         calcOverallMinute()
-        calcHaulPrice()
+        //calcHaulPrice()
     }
     
     @IBAction func renderSwitch(_ sender: UISwitch) {
@@ -281,7 +281,7 @@ extension String {
         
         // remove from String: "$", ".", ","
         let regex = try! NSRegularExpression(pattern: "[^0-9]", options: .caseInsensitive)
-        amountWithPrefix = regex.stringByReplacingMatches(in: amountWithPrefix, options: NSRegularExpression.MatchingOptions(rawValue: 0), range: NSMakeRange(0, self.characters.count), withTemplate: "")
+        amountWithPrefix = regex.stringByReplacingMatches(in: amountWithPrefix, options: NSRegularExpression.MatchingOptions(rawValue: 0), range: NSMakeRange(0, self.count), withTemplate: "")
         
         let double = (amountWithPrefix as NSString).doubleValue
         number = NSNumber(value: (double / 100))
